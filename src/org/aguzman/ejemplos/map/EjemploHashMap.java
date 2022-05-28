@@ -65,13 +65,33 @@ public class EjemploHashMap {
 
         System.out.println("==================================== entrySet");
         for (Map.Entry<String,Object> par: persona.entrySet()){
-            System.out.println(par.getKey() + " => "+par.getValue());
+            Object valor=par.getValue();
+            if (valor instanceof Map){
+                String nom= (String) persona.get("nombre");
+                Map<String, String> direccionMap=(Map<String,String>) valor;
+                for (Map.Entry<String,String> parDir: direccionMap.entrySet()){
+                    System.out.println(parDir.getKey()+" => "+parDir.getValue());
+                }
+            }else{
+                System.out.println(par.getKey() + " => "+par.getValue());
+            }
+
+
         }
 
         System.out.println("==================================== keySet");
         for (String llave: persona.keySet()){
             Object valor= persona.get(llave);
-            System.out.println(llave+ " => "+valor);
+            if (valor instanceof Map){
+                String nom= (String) persona.get("nombre");
+                Map<String, String> direccionMap=(Map<String,String>) valor;
+                System.out.println("El pais de "+nom+ " :" +
+                        direccionMap.get("pais"));
+                System.out.println("EL estado de "+nom +": "+direccionMap.get("estado"));
+                System.out.println("La ciudad de "+nom +": "+direccionMap.get("ciudad"));
+            }else{
+                System.out.println(llave+ " => "+valor);
+            }
         }
         System.out.println("==================================== java 8 forEach");
         persona.forEach((llave,valor)-> System.out.println(llave+ " => "+valor));
